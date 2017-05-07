@@ -1,6 +1,6 @@
 function enrichEvents (events) {
-	// now we have overlap, figure out how the MAX overlaps of an event
-	// a layered progressive overlap could all have the same number but not require a higher divisor
+  // now we have overlap, figure out how the MAX overlaps of an event
+  // a layered progressive overlap could all have the same number but not require a higher divisor
   const eventsWithIds = events.sort(orderFromStartAsc).map(attachId)
   const eventsWithClashes = eventsWithIds.map((event, index) => addOverlapsToEvent(eventsWithIds, event, index))
   return addMaxClashes(eventsWithClashes)
@@ -15,26 +15,26 @@ function addMaxClashes (events) {
   const uniqueTimes = getUniqueEventTimes(events)
 
   uniqueTimes.forEach(time => {
-  	const eventsAtTime = getEventsAtTime(events, time)
-  	eventsAtTime.forEach(({ id }) => {
-  		eventClashCache[id] = Math.max(eventClashCache[id] || 0, eventsAtTime.length) // not sure, try more use cases
-  	})
+    const eventsAtTime = getEventsAtTime(events, time)
+    eventsAtTime.forEach(({ id }) => {
+      eventClashCache[id] = Math.max(eventClashCache[id] || 0, eventsAtTime.length) // not sure, try more use cases
+    })
   })
   events.forEach(event => {
-  	const nextIds = event.nextClashingEvents.map(e => e.id)
-  	nextIds.forEach(id => {
-  		if (eventClashCache[id] > eventClashCache[event.id]) {
-  			eventClashCache[event.id] = eventClashCache[id]
-  		}
-  	})
+    const nextIds = event.nextClashingEvents.map(e => e.id)
+    nextIds.forEach(id => {
+      if (eventClashCache[id] > eventClashCache[event.id]) {
+        eventClashCache[event.id] = eventClashCache[id]
+      }
+    })
   })
 
-	// for each event, get how many clases happen simultaneously
-	// set its max clashes to the highest between that and the highest its clashing events have
+  // for each event, get how many clases happen simultaneously
+  // set its max clashes to the highest between that and the highest its clashing events have
   return events.map((event) => {
-  	return Object.assign({}, event, {
-  		widthPercentage: makeWidthPercentage(eventClashCache[event.id])
-  	})
+    return Object.assign({}, event, {
+      widthPercentage: makeWidthPercentage(eventClashCache[event.id])
+    })
   })
 }
 
@@ -56,8 +56,8 @@ function addOverlapsToEvent (events, event, index) {
 }
 
 function eventsClash (event1, event2) {
-	// event1 start >= event2 start && event1 start <= event2 end
-	// event2 start >= event1 start && event2 start <= event2 end
+  // event1 start >= event2 start && event1 start <= event2 end
+  // event2 start >= event1 start && event2 start <= event2 end
   return startClashesWithEvent(event1, event2) || startClashesWithEvent(event2, event1)
 }
 
@@ -81,17 +81,17 @@ function makeWidthPercentage (widthModifier) {
 
 function makeCalendarItem ({ start, end, prevClashingEvents, nextClashingEvents, id, widthPercentage, left }, i) {
   return `
-  	<div class="item" style="top:${start}px; left: ${left}%; height: ${end - start}px; width: ${widthPercentage}%;">
-  		${start}/${end} <br /> 
-  		clashing: ${prevClashingEvents.length + nextClashingEvents.length} <br/> 
-  	</div>
+    <div class="item" style="top:${start}px; left: ${left}%; height: ${end - start}px; width: ${widthPercentage}%;">
+      ${start}/${end} <br /> 
+      clashing: ${prevClashingEvents.length + nextClashingEvents.length} <br/> 
+    </div>
   `
 }
 
 function addPositioning (events) {
   for (let i = 0; i < events.length; i++) {
-  	const theLeft = getLeftSpacing(events, events[i])
-  	events[i].left = theLeft
+    const theLeft = getLeftSpacing(events, events[i])
+    events[i].left = theLeft
   }
 
   return events
@@ -103,15 +103,15 @@ function getLeftSpacing (events, event) {
   if (prevClashing.length === 0) {
     return 0
   } else {
-  	const prevIds = prevClashing.map(e => e.id)
-  	const takenLefts = events.filter(e => prevIds.indexOf(e.id) > -1).map(e => e.left)
-  	let currentLeft = 0
+    const prevIds = prevClashing.map(e => e.id)
+    const takenLefts = events.filter(e => prevIds.indexOf(e.id) > -1).map(e => e.left)
+    let currentLeft = 0
 
-  	while (takenLefts.indexOf(currentLeft) > -1) {
-  		currentLeft += event.widthPercentage
-  	}
+    while (takenLefts.indexOf(currentLeft) > -1) {
+      currentLeft += event.widthPercentage
+    }
 
-  	return currentLeft
+    return currentLeft
   }
 }
 
@@ -124,8 +124,8 @@ function layOutDay (events) {
 }
 
 function orderFromStartAsc (a, b) {
-	// order events from start ascending
-	// if start time the same, end is the tieBreaker
+  // order events from start ascending
+  // if start time the same, end is the tieBreaker
   if (a.start !== b.start) {
     return a.start < b.start ? -1 : 1
   } else {

@@ -1,18 +1,13 @@
-#app {
-	position: relative;
-	margin: 0 auto;
+#calendar {
 	width: 600px;
 	padding: 0 10px;
 	height: 720px;
+	margin: 0 auto;
+	position: relative;
 }
 
-#calendar {
-
-}
-
-.item {
+.event {
 	position: absolute;
 	border: 1px solid;
   height: 100px;
-  width: 100%;
 }
