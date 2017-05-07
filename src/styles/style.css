@@ -1,13 +1,95 @@
+#calendar-wrapper {
+	width: 720px;
+	margin: 0 auto;
+	font-family: Arial, sans-serif;
+}
+
 #calendar {
 	width: 600px;
 	padding: 0 10px;
 	height: 720px;
 	margin: 0 auto;
 	position: relative;
+	outline: 1px solid #eceef1;
+}
+
+#calendar-background {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#calendar-background div {
+	width: 100%;
+	height: 60px;
+	border-bottom: 1px solid #eceef1;
+}
+
+#calendar-background div:last-of-type {
+	border-bottom: none;
+}
+
+#sidebar {
+  position: absolute;
+  margin-top: -10px;
+}
+
+#sidebar .time-block {
+	height: 60px;
+	width: 45px;
+	position: relative;
+}
+
+#sidebar .whole-hour {
+	width: 100%;
+	text-align: left;
+	font-size: 16px;
+}
+
+#sidebar .whole-hour span {
+	float: right;
+	color: #4a5160;
+}
+
+#sidebar .half-hour {
+	text-align: right;
+	font-size: 13px;
+	top: 30px;
+	right: 0;
+	position: absolute;
 }
 
 .event {
 	position: absolute;
-	border: 1px solid;
   height: 100px;
+  padding: 0 1px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.event .inner {
+	background: #eceef1;
+	height: 100%;
+	width: 100%;
+}
+
+.event .marker {
+	float: left;
+	width: 5px;
+	background: #47b28d;
+	height: 100%;
+	margin-right: 5px;
+}
+
+.event .title {
+	margin: 0;
+  color: #47b28d;
+}
+
+.event .description {
+	margin: 0;
+	font-size: 13px;
+	color: #4a5160;
 }
